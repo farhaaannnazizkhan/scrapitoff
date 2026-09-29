@@ -1,0 +1,202 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum UserRole {
+  CITIZEN
+  COLLECTOR
+  RECYCLER
+  ADMIN
+}
+
+enum PickupStatus {
+  PENDING
+  ACCEPTED
+  COMPLETED
+  CANCELLED
+}
+
+enum LotStatus {
+  CREATED
+  IN_TRANSIT
+  DELIVERED
+  VERIFIED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+model User {
+  id             String           @id @default(uuid())
+  role           UserRole         @default(CITIZEN)
+  name           String
+  phone          String           @unique
+  area           String?
+  language       String           @default("en")
+  rating         Float            @default(0.0)
+  total_deals    Int              @default(0)
+
+  pickup_requests PickupRequest[] @relation("CitizenRequests")
+  assigned_pickups PickupRequest[] @relation("CollectorPickups")
+  lots_collected   Lot[]           @relation("CollectorLots")
+  lots_received    Lot[]           @relation("RecyclerLots")
+  price_records    PriceRecord[]
+  reviews_given    Rating[]        @relation("Reviewer")
+  reviews_received Rating[]        @relation("Reviewee")
+  earnings         EarningsLedger[]
+
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+  deleted_at     DateTime?
+
+  @@map("users")
+}
+
+model Material {
+  id               String          @id @default(uuid())
+  category         String
+  sub_category     String?
+  description      String?
+  image_url        String?
+  unit             String
+  base_rate_per_kg Float
+
+  price_records    PriceRecord[]
+
+  created_at       DateTime        @default(now())
+  updated_at       DateTime        @updatedAt
+  deleted_at       DateTime?
+
+  @@map("materials")
+}
+
+model PriceRecord {
+  id            String   @id @default(uuid())
+  material_id   String
+  location      String
+  date          DateTime @default(now())
+  buying_price  Float
+  selling_price Float
+  unit          String
+  recycler_id   String
+
+  material      Material @relation(fields: [material_id], references: [id])
+  recycler      User     @relation(fields: [recycler_id], references: [id])
+
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  deleted_at    DateTime?
+
+  @@map("price_records")
+}
+
+model PickupRequest {
+  id                    String       @id @default(uuid())
+  citizen_id            String
+  material_category     String
+  rough_size            String
+  address               String
+  time_slot             String
+  status                PickupStatus @default(PENDING)
+  assigned_collector_id String?
+
+  citizen               User         @relation("CitizenRequests", fields: [citizen_id], references: [id])
+  assigned_collector    User?        @relation("CollectorPickups", fields: [assigned_collector_id], references: [id])
+  lots                  Lot[]
+
+  created_at            DateTime     @default(now())
+  updated_at            DateTime     @updatedAt
+  deleted_at            DateTime?
+
+  @@map("pickup_requests")
+}
+
+model Lot {
+  id                  String             @id @default(uuid())
+  pickup_request_id   String
+  collector_id        String
+  material_category   String
+  weight_kg           Float
+  quoted_price        Float
+  final_price         Float?
+  recycler_id         String?
+  status              LotStatus          @default(CREATED)
+
+  pickup_request      PickupRequest      @relation(fields: [pickup_request_id], references: [id])
+  collector           User               @relation("CollectorLots", fields: [collector_id], references: [id])
+  recycler            User?              @relation("RecyclerLots", fields: [recycler_id], references: [id])
+  blockchain_records  BlockchainRecord[]
+  ratings             Rating[]
+  earnings            EarningsLedger[]
+
+  created_at          DateTime           @default(now())
+  updated_at          DateTime           @updatedAt
+  deleted_at          DateTime?
+
+  @@map("lots")
+}
+
+model BlockchainRecord {
+  id               String   @id @default(uuid())
+  lot_id           String
+  hash             String
+  timestamp        DateTime @default(now())
+  transaction_type String
+
+  lot              Lot      @relation(fields: [lot_id], references: [id])
+
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+  deleted_at       DateTime?
+
+  @@map("blockchain_records")
+}
+
+model Rating {
+  id            String   @id @default(uuid())
+  lot_id        String
+  reviewer_id   String
+  reviewee_id   String
+  reviewer_role String
+  stars         Int
+  review_text   String?
+
+  lot           Lot      @relation(fields: [lot_id], references: [id])
+  reviewer      User     @relation("Reviewer", fields: [reviewer_id], references: [id])
+  reviewee      User     @relation("Reviewee", fields: [reviewee_id], references: [id])
+
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  deleted_at    DateTime?
+
+  @@map("ratings")
+}
+
+model EarningsLedger {
+  id             String        @id @default(uuid())
+  collector_id   String
+  lot_id         String
+  amount         Float
+  payment_status PaymentStatus @default(PENDING)
+  payment_mode   String?
+  date           DateTime      @default(now())
+
+  collector      User          @relation(fields: [collector_id], references: [id])
+  lot            Lot           @relation(fields: [lot_id], references: [id])
+
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+  deleted_at     DateTime?
+
+  @@map("earnings_ledger")
+}

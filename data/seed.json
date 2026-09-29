@@ -1,0 +1,40 @@
+{
+  "materials": [
+    { "category": "Newspaper", "unit": "kg", "base_rate_per_kg": 14.0 },
+    { "category": "Copper", "unit": "kg", "base_rate_per_kg": 480.0 },
+    { "category": "PCB", "unit": "kg", "base_rate_per_kg": 220.0 },
+    { "category": "Battery", "unit": "kg", "base_rate_per_kg": 90.0 },
+    { "category": "Plastic", "unit": "kg", "base_rate_per_kg": 25.0 },
+    { "category": "Iron", "unit": "kg", "base_rate_per_kg": 28.0 },
+    { "category": "Aluminium", "unit": "kg", "base_rate_per_kg": 120.0 },
+    { "category": "E-waste Mixed", "unit": "kg", "base_rate_per_kg": 60.0 },
+    { "category": "Glass", "unit": "kg", "base_rate_per_kg": 5.0 },
+    { "category": "Cardboard", "unit": "kg", "base_rate_per_kg": 12.0 }
+  ],
+  "collectors": [
+    { "name": "Rajesh Kumar", "phone": "9876543210", "area": "Andheri West", "language": "hi", "rating": 4.8, "total_deals": 150 },
+    { "name": "Suresh Yadav", "phone": "9876543211", "area": "Bandra East", "language": "mr", "rating": 4.5, "total_deals": 85 },
+    { "name": "Anil Sharma", "phone": "9876543212", "area": "Borivali", "language": "hi", "rating": 4.9, "total_deals": 210 }
+  ],
+  "recyclers": [
+    { "name": "Green Earth Recyclers", "phone": "9999999991", "area": "Navi Mumbai", "language": "en", "rating": 4.7, "total_deals": 500, "materials_accepted": "Paper, Plastic, Glass", "authorization_status": "Authorized" },
+    { "name": "Metal Recovery Ltd", "phone": "9999999992", "area": "Thane", "language": "en", "rating": 4.9, "total_deals": 1200, "materials_accepted": "Iron, Copper, Aluminium", "authorization_status": "Authorized" },
+    { "name": "E-Waste Solutions", "phone": "9999999993", "area": "Kurla", "language": "en", "rating": 4.6, "total_deals": 320, "materials_accepted": "PCB, Battery, E-waste Mixed", "authorization_status": "Authorized" }
+  ],
+  "citizens": [
+    { "name": "Priya Singh", "phone": "8888888881", "area": "Andheri West", "language": "en" },
+    { "name": "Amit Patel", "phone": "8888888882", "area": "Bandra East", "language": "hi" }
+  ],
+  "lots": [
+    { "material_category": "Newspaper", "weight_kg": 15.0, "quoted_price": 210.0, "final_price": 210.0, "status": "VERIFIED" },
+    { "material_category": "Iron", "weight_kg": 50.0, "quoted_price": 1400.0, "final_price": 1400.0, "status": "VERIFIED" },
+    { "material_category": "Copper", "weight_kg": 5.0, "quoted_price": 2400.0, "final_price": 2400.0, "status": "VERIFIED" },
+    { "material_category": "Plastic", "weight_kg": 10.0, "quoted_price": 250.0, "final_price": 250.0, "status": "VERIFIED" },
+    { "material_category": "PCB", "weight_kg": 2.0, "quoted_price": 440.0, "final_price": 440.0, "status": "VERIFIED" }
+  ],
+  "ratings": [
+    { "stars": 5, "review_text": "Very professional and on time", "reviewer_role": "CITIZEN" },
+    { "stars": 4, "review_text": "Good service", "reviewer_role": "CITIZEN" },
+    { "stars": 5, "review_text": "Excellent quality materials provided", "reviewer_role": "RECYCLER" }
+  ]
+}
