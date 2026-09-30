@@ -5,6 +5,7 @@ import { getLotWithDetails } from '@/lib/db/lots';
 import { getAllRecyclers } from '@/lib/db/users';
 import { rankRecyclers } from '@/lib/ai/matching';
 import { RecyclerCard } from '@/components/collector/RecyclerCard';
+import { computeHygieneScore } from '@/lib/ai/hygieneScore';
 
 export const dynamic = 'force-dynamic';
 
@@ -61,9 +62,18 @@ export default async function SelectRecyclerPage({ params }: { params: Promise<{
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {ranked.map(r => (
-            <RecyclerCard key={r.id} recycler={r} lot={lot} score={r.matchScore} />
-          ))}
+          {ranked.map(r => {
+            const placeholderStats = {
+              total_handovers: 10,
+              safety_cards_completed: 5,
+              complaints: 0,
+              verification_count: 2
+            };
+            const scores = computeHygieneScore(r, placeholderStats);
+            return (
+              <RecyclerCard key={r.id} recycler={r} lot={lot} score={r.matchScore} hygieneScore={scores.overall} />
+            );
+          })}
         </div>
       )}
     </div>

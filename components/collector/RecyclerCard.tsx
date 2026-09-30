@@ -2,24 +2,33 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { HygieneBadge } from '@/components/shared/HygieneBadge';
 
-export function RecyclerCard({ recycler, lot, score }: { recycler: any, lot: any, score: number }) {
+export function RecyclerCard({ recycler, lot, score, hygieneScore }: { recycler: any, lot: any, score: number, hygieneScore?: number }) {
   const router = useRouter();
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-5 flex flex-col gap-4 relative overflow-hidden transition-all hover:shadow-md">
       <div className="flex justify-between items-start">
         <div>
-          <h3 className="font-bold text-gray-900 text-lg">{recycler.name}</h3>
+          <Link href={`/recycler/profile/${recycler.id}`} className="font-bold text-gray-900 text-lg hover:text-green-700 transition-colors">
+            {recycler.name}
+          </Link>
           <div className="flex items-center gap-2 mt-1">
             <span className="text-yellow-500 text-sm">★</span>
             <span className="text-gray-700 text-sm font-medium">{recycler.rating || '4.5'}</span>
             <span className="text-gray-400 text-xs px-2 py-0.5 bg-gray-100 rounded">Match: {score}</span>
           </div>
         </div>
-        <span className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded border border-green-200">
-          Authorized
-        </span>
+        <div className="flex flex-col items-end gap-2">
+          <span className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded border border-green-200">
+            Authorized
+          </span>
+          {hygieneScore !== undefined && (
+            <HygieneBadge score={hygieneScore} />
+          )}
+        </div>
       </div>
 
       <div className="space-y-2 text-sm text-gray-600 mt-2">
