@@ -8,6 +8,7 @@ import { getDemoRole } from '@/lib/auth/demoRole';
 import { getLanguage } from '@/lib/i18n/getLanguage';
 import { translations } from '@/lib/i18n/translations';
 import { AppHeader } from '@/components/shared/AppHeader';
+import { SegregationStats } from '@/components/collector/SegregationStats';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,6 +38,8 @@ export default async function CollectorDashboardPage() {
             <p className="text-gray-500 mt-1 font-medium">Welcome back, {collector.name}</p>
           </div>
         </header>
+
+        <SegregationStats collectorId={collector.id} />
 
         <section>
           <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">

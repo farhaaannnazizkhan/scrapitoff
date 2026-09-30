@@ -13,6 +13,9 @@ export function WeightForm({ request, material, collectorId }: { request: Pickup
   const [weightKg, setWeightKg] = useState<number | ''>('');
   const [condition, setCondition] = useState<"Standard" | "Mixed" | "Clean">("Standard");
 
+  const [splitEnabled, setSplitEnabled] = useState(false);
+  const [split, setSplit] = useState({ paper: '', plastic: '', metal: '', eWaste: '', residual: '' });
+
   const fairPriceData = weightKg && weightKg > 0 
     ? calculateFairPrice(Number(weightKg), condition, material.base_rate_per_kg)
     : { fairPrice: 0, minPrice: 0, maxPrice: 0 };
@@ -23,7 +26,22 @@ export function WeightForm({ request, material, collectorId }: { request: Pickup
       setError("Please enter a valid weight.");
       return;
     }
-    
+    let splitData = null;
+    if (splitEnabled) {
+      const sum = (Number(split.paper) || 0) + (Number(split.plastic) || 0) + (Number(split.metal) || 0) + (Number(split.eWaste) || 0) + (Number(split.residual) || 0);
+      if (Math.abs(sum - Number(weightKg)) > 0.1) {
+        setError("Sum does not match total weight");
+        return;
+      }
+      splitData = {
+        paper: Number(split.paper) || 0,
+        plastic: Number(split.plastic) || 0,
+        metal: Number(split.metal) || 0,
+        eWaste: Number(split.eWaste) || 0,
+        residual: Number(split.residual) || 0,
+      };
+    }
+
     setLoading(true);
     setError(null);
     
@@ -37,13 +55,26 @@ export function WeightForm({ request, material, collectorId }: { request: Pickup
           materialCategory: request.material_category,
           weightKg: Number(weightKg),
           condition,
-          baseRatePerKg: material.base_rate_per_kg
+          baseRatePerKg: material.base_rate_per_kg,
+          ...(splitEnabled && { split: splitData })
         }),
       });
       
       const result = await res.json();
       
       if (result.success) {
+        if (splitEnabled && splitData) {
+          try {
+            const key = `scrapitoff_split_${collectorId}`;
+            const existing = JSON.parse(localStorage.getItem(key) || '{"paper":0,"plastic":0,"metal":0,"eWaste":0,"residual":0}');
+            existing.paper += splitData.paper;
+            existing.plastic += splitData.plastic;
+            existing.metal += splitData.metal;
+            existing.eWaste += splitData.eWaste;
+            existing.residual += splitData.residual;
+            localStorage.setItem(key, JSON.stringify(existing));
+          } catch(e) {}
+        }
         router.push(`/collector/lot/success/${result.lotId}`);
       } else {
         setError(result.error || "Failed to create lot");
@@ -81,6 +112,35 @@ export function WeightForm({ request, material, collectorId }: { request: Pickup
           placeholder="e.g. 5.5"
           className="w-full h-12 px-4 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" 
         />
+      </div>
+
+      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+        <label className="flex items-center gap-2 cursor-pointer text-sm font-semibold text-gray-800">
+          <input 
+            type="checkbox" 
+            checked={splitEnabled} 
+            onChange={e => setSplitEnabled(e.target.checked)} 
+            className="w-4 h-4 text-green-600 focus:ring-green-500 rounded border-gray-300"
+          />
+          Mixed Waste? Split it.
+        </label>
+        
+        {splitEnabled && (
+          <div className="space-y-3 mt-4 pl-6">
+            {['paper', 'plastic', 'metal', 'eWaste', 'residual'].map((cat) => (
+              <div key={cat} className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700 capitalize">{cat === 'eWaste' ? 'E-Waste' : cat}</span>
+                <input 
+                  type="number" 
+                  min="0" step="0.1" 
+                  value={split[cat as keyof typeof split]} 
+                  onChange={e => setSplit({...split, [cat]: e.target.value})}
+                  className="w-24 h-8 px-2 border border-gray-300 rounded text-right focus:ring-green-500 focus:border-green-500"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div>
