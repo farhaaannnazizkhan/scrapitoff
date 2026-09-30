@@ -38,11 +38,11 @@ export default async function MunicipalDashboardPage() {
         </header>
 
         <section className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-          <StatCard title="Total Reports" value={reportStats.total} />
-          <StatCard title="Pending" value={reportStats.pending} />
-          <StatCard title="In Progress" value={reportStats.in_progress} />
-          <StatCard title={t.resolved_this_month || "Resolved This Month"} value={reportStats.resolved_this_month} />
-          <StatCard title="High Severity" value={reportStats.high_severity} />
+          <StatCard label="Total Reports" value={reportStats.total} />
+          <StatCard label="Pending" value={reportStats.pending} />
+          <StatCard label="In Progress" value={reportStats.in_progress} />
+          <StatCard label={t.resolved_this_month || "Resolved This Month"} value={reportStats.resolved_this_month} />
+          <StatCard label="High Severity" value={reportStats.high_severity} />
         </section>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
