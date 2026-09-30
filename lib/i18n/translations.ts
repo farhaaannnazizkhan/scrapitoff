@@ -16,7 +16,8 @@ export const translations = {
     incoming_lots: "Incoming Lots",
     confirm_payment: "Confirm Receipt & Pay",
     completed: "Completed",
-    verify_lot: "Verify a Lot"
+    verify_lot: "Verify a Lot",
+    scan_waste: "Scan Waste"
   },
   hi: {
     app_name: "स्क्रैपइटऑफ",
@@ -35,7 +36,8 @@ export const translations = {
     incoming_lots: "आने वाले लॉट",
     confirm_payment: "रसीद की पुष्टि करें और भुगतान करें",
     completed: "पूर्ण",
-    verify_lot: "लॉट सत्यापित करें"
+    verify_lot: "लॉट सत्यापित करें",
+    scan_waste: "कचरा स्कैन करें"
   },
   mr: {
     app_name: "स्क्रॅपइटऑफ",
@@ -54,6 +56,7 @@ export const translations = {
     incoming_lots: "येणारे लॉट",
     confirm_payment: "पावतीची पुष्टी करा आणि पैसे द्या",
     completed: "पूर्ण झाले",
-    verify_lot: "लॉट सत्यापित करा"
+    verify_lot: "लॉट सत्यापित करा",
+    scan_waste: "कचरा स्कॅन करा"
   }
 };
