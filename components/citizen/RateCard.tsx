@@ -30,8 +30,6 @@ const EMOJI_MAP: Record<string, string> = {
 
 export function RateCard({ material, trend = "stable" }: RateCardProps) {
   const emoji = EMOJI_MAP[material.category] || '♻️';
-  const trend = "rising" | "falling" | "stable";
-
   return (
     <div className="flex items-center bg-white rounded-lg shadow-sm border-l-4 border-green-600 p-4 relative overflow-hidden group hover:shadow-md transition-shadow">
       <div className="text-4xl mr-4 flex-shrink-0 w-12 h-12 flex items-center justify-center bg-gray-50 rounded-full">
