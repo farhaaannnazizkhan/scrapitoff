@@ -4,7 +4,9 @@ import { getFirstCitizen } from '@/lib/db/users';
 import { prisma } from '@/lib/db/client';
 import { computeImpact } from '@/lib/ai/impact';
 import { getCitizenMonthlyStats } from '@/lib/db/financials';
+import { getCitizenReportStats } from '@/lib/db/cleanlinessReports';
 import { MonthlySummary } from '@/components/shared/MonthlySummary';
+import { StatCard } from '@/components/shared/StatCard';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,7 +28,8 @@ export default async function ImpactPage() {
     }
   });
 
-  const impact = computeImpact(lots);
+  const reportStats = await getCitizenReportStats(citizen.id);
+  const impact = computeImpact(lots, reportStats);
   const monthlyStats = await getCitizenMonthlyStats(citizen.id);
 
   return (
@@ -79,7 +82,38 @@ export default async function ImpactPage() {
         <div className="w-full bg-gray-100 rounded-full h-3 mb-2 overflow-hidden">
           <div className="bg-green-500 h-3 rounded-full transition-all duration-1000" style={{ width: `${impact.green_score}%` }}></div>
         </div>
-        <p className="text-xs text-gray-500 text-right">Based on your total contribution.</p>
+        <p className="text-xs text-gray-500 text-right mb-4">Based on your total contribution.</p>
+        
+        <div className="flex justify-between items-end mb-2 pt-4 border-t border-gray-100">
+          <h2 className="text-sm font-bold text-gray-700">Civic Score</h2>
+          <span className="text-lg font-extrabold text-blue-600">{Math.min(100, reportStats.total_reports * 10 + reportStats.resolved * 15)}<span className="text-xs text-gray-400 font-medium">/100</span></span>
+        </div>
+      </div>
+
+      <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+        <div className="mb-4">
+          <h2 className="text-xl font-bold text-gray-900">Civic Contribution</h2>
+          <p className="text-gray-500 text-sm">Cleanliness reports you have filed</p>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-4">
+          <StatCard label="Reports Filed" value={reportStats.total_reports} />
+          <StatCard label="Pending" value={reportStats.pending} />
+          <StatCard label="In Progress" value={reportStats.in_progress} />
+          <StatCard label="Resolved" value={reportStats.resolved} />
+        </div>
+
+        <div className="mt-6 pt-4 border-t border-gray-100 text-center">
+          {reportStats.total_reports === 0 ? (
+            <span className="text-sm text-gray-600">
+              You haven't reported a cleanliness issue yet. <Link href="/citizen/report" className="text-green-600 font-bold hover:underline">Report one &rarr;</Link>
+            </span>
+          ) : (
+            <Link href="/citizen/reports" className="text-sm text-green-600 font-bold hover:underline">
+              View all my reports &rarr;
+            </Link>
+          )}
+        </div>
       </div>
 
       <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">

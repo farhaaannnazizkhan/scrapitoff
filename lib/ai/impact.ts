@@ -1,4 +1,4 @@
-export function computeImpact(lots: any[]) {
+export function computeImpact(lots: any[], reportStats?: any) {
   let total_kg = 0;
   let recycled_kg = 0;
   let reused_kg = 0;
@@ -26,6 +26,7 @@ export function computeImpact(lots: any[]) {
   if (recycled_kg >= 10) badges.push("♻️ 10 kg Recycled");
   if (total_kg >= 50) badges.push("🌱 50 kg Diverted");
   if (green_score >= 80) badges.push("🏆 Responsible Disposer");
+  if (reportStats && reportStats.total_reports >= 3 && reportStats.resolved >= 1) badges.push("🏛️ Civic Champion");
 
   return {
     total_kg,
