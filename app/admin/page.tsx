@@ -5,9 +5,7 @@ import { AppHeader } from '@/components/shared/AppHeader';
 import { getPlatformStats, getHotspotData } from '@/lib/db/adminStats';
 import { getAnomalies } from '@/lib/db/anomalies';
 import { prisma } from '@/lib/db/client';
-import dynamic from 'next/dynamic';
-
-const HotspotMap = dynamic(() => import('@/components/admin/HotspotMap').then(m => m.HotspotMap), { ssr: false });
+import { HotspotMapWrapper } from '@/components/admin/HotspotMapWrapper';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,7 +41,7 @@ export default async function AdminDashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <section className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
             <h2 className="text-xl font-bold text-gray-900 mb-4">Hotspots (Map)</h2>
-            <HotspotMap hotspots={hotspots} />
+            <HotspotMapWrapper hotspots={hotspots} />
           </section>
 
           <section className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
