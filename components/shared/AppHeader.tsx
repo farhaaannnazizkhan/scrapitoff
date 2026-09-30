@@ -9,14 +9,14 @@ import { translations } from '@/lib/i18n/translations';
 
 export function AppHeader({ currentRole, currentLang }: { currentRole: DemoRole, currentLang: Language }) {
   const t = translations[currentLang];
-  
+
   return (
     <header className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4 mb-6 border-b border-gray-200">
       <Link href="/" className="flex items-center gap-2">
         <span className="text-2xl">♻️</span>
         <span className="text-xl font-extrabold text-green-700 tracking-tight">ScrapItOff</span>
       </Link>
-      
+
       <div className="flex flex-wrap items-center justify-center gap-3">
         <Link href="/citizen/scan" className="px-3 py-1 text-sm font-semibold text-green-700 bg-green-50 rounded-full hover:bg-green-100 transition-colors border border-green-200">
           {t.scan_waste || 'Scan'}
@@ -29,9 +29,6 @@ export function AppHeader({ currentRole, currentLang }: { currentRole: DemoRole,
         </Link>
         <LanguageSwitcher currentLang={currentLang} />
         <RoleSwitcher currentRole={currentRole} />
-        <Link href="/admin" className="px-2 py-1 text-xs font-medium text-gray-400 hover:text-gray-600 border border-transparent hover:border-gray-300 rounded ml-2 transition-colors">
-          Admin
-        </Link>
       </div>
     </header>
   );
