@@ -22,6 +22,15 @@ export default async function CitizenPage() {
       </header>
 
       <section>
+        <div className="mb-6">
+          <Link 
+            href="/citizen/scan"
+            className="flex items-center justify-center w-full h-14 bg-green-100 hover:bg-green-200 text-green-800 font-bold rounded-lg transition-colors border border-green-300 shadow-sm"
+          >
+            🔍 What is this waste? Scan now
+          </Link>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {materials.map((material) => (
             <RateCard key={material.id} material={material} />

@@ -18,6 +18,9 @@ export function AppHeader({ currentRole, currentLang }: { currentRole: DemoRole,
       </Link>
       
       <div className="flex flex-wrap items-center justify-center gap-3">
+        <Link href="/citizen/scan" className="px-3 py-1 text-sm font-semibold text-green-700 bg-green-50 rounded-full hover:bg-green-100 transition-colors border border-green-200">
+          {t.scan_waste || 'Scan'}
+        </Link>
         <Link href="/verify" className="px-3 py-1 text-sm font-semibold text-purple-700 bg-purple-50 rounded-full hover:bg-purple-100 transition-colors border border-purple-200">
           {t.verify_lot || 'Verify Lot'}
         </Link>
