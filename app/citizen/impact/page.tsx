@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { getFirstCitizen } from '@/lib/db/users';
 import { prisma } from '@/lib/db/client';
 import { computeImpact } from '@/lib/ai/impact';
+import { getCitizenMonthlyStats } from '@/lib/db/financials';
+import { MonthlySummary } from '@/components/shared/MonthlySummary';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,6 +27,7 @@ export default async function ImpactPage() {
   });
 
   const impact = computeImpact(lots);
+  const monthlyStats = await getCitizenMonthlyStats(citizen.id);
 
   return (
     <div className="max-w-3xl mx-auto p-4 sm:p-6 space-y-6 animate-in fade-in duration-500 pb-12">
@@ -36,6 +39,8 @@ export default async function ImpactPage() {
         </Link>
         <h1 className="text-2xl font-bold text-gray-900">My Impact</h1>
       </header>
+
+      <MonthlySummary stats={monthlyStats} title="This Month" />
 
       <div className="bg-green-600 text-white rounded-xl p-8 text-center shadow-lg">
         <p className="text-green-100 uppercase tracking-widest text-sm font-semibold mb-2">Total Waste Diverted</p>

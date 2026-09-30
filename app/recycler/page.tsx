@@ -6,6 +6,8 @@ import { getLanguage } from '@/lib/i18n/getLanguage';
 import { translations } from '@/lib/i18n/translations';
 import { AppHeader } from '@/components/shared/AppHeader';
 import { IncomingLotCard } from '@/components/recycler/IncomingLotCard';
+import { getRecyclerMonthlyStats } from '@/lib/db/financials';
+import { MonthlySummary } from '@/components/shared/MonthlySummary';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,6 +22,7 @@ export default async function RecyclerDashboardPage() {
   }
 
   const lots = await getLotsByRecycler(recycler.id);
+  const monthlyStats = await getRecyclerMonthlyStats(recycler.id);
 
   const incomingLots = lots.filter(lot => lot.status === "DELIVERED");
   const completedLots = lots.filter(lot => lot.status === "VERIFIED");
@@ -35,6 +38,8 @@ export default async function RecyclerDashboardPage() {
             <p className="text-gray-500 mt-1 font-medium">{recycler.name}</p>
           </div>
         </header>
+
+        <MonthlySummary stats={monthlyStats} title="This Month" />
 
         <section>
           <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">

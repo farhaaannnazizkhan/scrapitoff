@@ -3,6 +3,7 @@ import { getDemoRole } from '@/lib/auth/demoRole';
 import { getLanguage } from '@/lib/i18n/getLanguage';
 import { AppHeader } from '@/components/shared/AppHeader';
 import { getPlatformStats, getHotspotData } from '@/lib/db/adminStats';
+import { getPlatformMonthlyStats } from '@/lib/db/financials';
 import { getAnomalies } from '@/lib/db/anomalies';
 import { prisma } from '@/lib/db/client';
 import { HotspotMapWrapper } from '@/components/admin/HotspotMapWrapper';
@@ -14,6 +15,7 @@ export default async function AdminDashboardPage() {
   const lang = await getLanguage();
   
   const stats = await getPlatformStats();
+  const monthlyStats = await getPlatformMonthlyStats();
   const hotspots = await getHotspotData();
   const anomalies = await getAnomalies();
   const recentLots = await prisma.lot.findMany({
@@ -36,7 +38,10 @@ export default async function AdminDashboardPage() {
           <StatCard title="Total Weight" value={`${stats.total_weight_kg.toFixed(1)} kg`} />
           <StatCard title="Total Value" value={`₹${stats.total_value.toFixed(0)}`} />
           <StatCard title="Total Users" value={stats.total_citizens + stats.total_collectors + stats.total_recyclers} />
+          <StatCard title="This Month Tx Value" value={`₹${monthlyStats.this_month_transaction_value.toFixed(0)}`} />
+          <StatCard title="Platform Revenue" value={`₹${monthlyStats.platform_revenue.toFixed(0)}`} />
         </section>
+        <p className="text-xs text-gray-500 text-right -mt-6 mb-8 italic">Revenue at 1% take rate</p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <section className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">

@@ -3,6 +3,8 @@ import { getFirstCollector } from '@/lib/db/users';
 import { getPendingPickups, getPickupsByCollector } from '@/lib/db/pickupRequests';
 import { RequestCard } from '@/components/collector/RequestCard';
 import { OfflineIndicator } from '@/components/collector/OfflineIndicator';
+import { getCollectorMonthlyStats } from '@/lib/db/financials';
+import { MonthlySummary } from '@/components/shared/MonthlySummary';
 
 import { getDemoRole } from '@/lib/auth/demoRole';
 import { getLanguage } from '@/lib/i18n/getLanguage';
@@ -24,6 +26,7 @@ export default async function CollectorDashboardPage() {
 
   const pendingPickups = await getPendingPickups();
   const myPickups = await getPickupsByCollector(collector.id);
+  const monthlyStats = await getCollectorMonthlyStats(collector.id);
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 font-sans pb-12">
@@ -40,6 +43,8 @@ export default async function CollectorDashboardPage() {
         </header>
 
         <SegregationStats collectorId={collector.id} />
+        
+        <MonthlySummary stats={monthlyStats} title="This Month" />
 
         <section>
           <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
