@@ -1,5 +1,5 @@
 import React from 'react';
-import { getUserByRole } from '@/lib/db/users';
+import { getFirstRecycler } from '@/lib/db/users';
 import { getLotsByRecycler } from '@/lib/db/lots';
 import { getDemoRole } from '@/lib/auth/demoRole';
 import { getLanguage } from '@/lib/i18n/getLanguage';
@@ -13,7 +13,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function RecyclerDashboardPage() {
   const currentRole = await getDemoRole();
-  const recycler = await getUserByRole("RECYCLER");
+  const recycler = await getFirstRecycler();
   const lang = await getLanguage();
   const t = translations[lang];
 
