@@ -29,6 +29,9 @@ export function AppHeader({ currentRole, currentLang }: { currentRole: DemoRole,
         </Link>
         <LanguageSwitcher currentLang={currentLang} />
         <RoleSwitcher currentRole={currentRole} />
+        <Link href="/admin" className="px-2 py-1 text-xs font-medium text-gray-400 hover:text-gray-600 border border-transparent hover:border-gray-300 rounded ml-2 transition-colors">
+          Admin
+        </Link>
       </div>
     </header>
   );

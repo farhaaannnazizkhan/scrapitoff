@@ -58,6 +58,13 @@ export function RoleSwitcher({ currentRole }: { currentRole: DemoRole }) {
       >
         Recycler
       </button>
+      <button 
+        disabled={loading} 
+        onClick={() => switchRole('admin')} 
+        className={btnClass('admin')}
+      >
+        Admin
+      </button>
     </div>
   );
 }
