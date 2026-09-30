@@ -47,9 +47,9 @@ export default async function LotSuccessPage({ params }: { params: Promise<{ lot
       </div>
 
       <div className="mb-8 border border-purple-200 bg-purple-50 p-4 rounded-lg flex flex-col items-center">
-        <span className="inline-block rounded-full bg-purple-100 text-purple-700 text-sm px-3 py-1 font-bold mb-3 border border-purple-200">
+        <Link href={`/verify?lotId=${lot.id}`} className="inline-block rounded-full bg-purple-100 hover:bg-purple-200 text-purple-700 text-sm px-3 py-1 font-bold mb-3 border border-purple-200 transition-colors">
           Blockchain Verified
-        </span>
+        </Link>
         <div className="flex items-center justify-between w-full bg-white p-2 rounded text-sm border border-purple-100">
           <span className="font-mono text-gray-600 truncate">{shortenHash(blockchainRecord.hash)}</span>
           <CopyButton text={blockchainRecord.hash} />

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export function IncomingLotCard({ lot }: { lot: any }) {
+export function IncomingLotCard({ lot, confirmLabel = "Confirm Receipt & Pay" }: { lot: any, confirmLabel?: string }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -53,7 +53,7 @@ export function IncomingLotCard({ lot }: { lot: any }) {
         disabled={loading}
         className="w-full h-10 mt-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-colors focus:ring-2 focus:ring-green-500 disabled:opacity-50"
       >
-        {loading ? "Confirming..." : "Confirm Receipt & Pay"}
+        {loading ? "Confirming..." : confirmLabel}
       </button>
     </div>
   );

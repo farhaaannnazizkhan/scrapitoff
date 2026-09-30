@@ -2,6 +2,8 @@ import React from 'react';
 import { getUserByRole } from '@/lib/db/users';
 import { getLotsByRecycler } from '@/lib/db/lots';
 import { getDemoRole } from '@/lib/auth/demoRole';
+import { getLanguage } from '@/lib/i18n/getLanguage';
+import { translations } from '@/lib/i18n/translations';
 import { AppHeader } from '@/components/shared/AppHeader';
 import { IncomingLotCard } from '@/components/recycler/IncomingLotCard';
 
@@ -10,6 +12,8 @@ export const dynamic = 'force-dynamic';
 export default async function RecyclerDashboardPage() {
   const currentRole = await getDemoRole();
   const recycler = await getUserByRole("RECYCLER");
+  const lang = await getLanguage();
+  const t = translations[lang];
 
   if (!recycler) {
     return <div className="p-8 text-center text-red-500">No recycler found in DB. Run the seed script.</div>;
@@ -23,7 +27,7 @@ export default async function RecyclerDashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 font-sans pb-12">
       <div className="max-w-md mx-auto md:max-w-4xl p-4 sm:p-6 lg:p-8 space-y-8 animate-in fade-in duration-500">
-        <AppHeader currentRole={currentRole} />
+        <AppHeader currentRole={currentRole} currentLang={lang} />
         
         <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-6">
           <div>
@@ -35,7 +39,7 @@ export default async function RecyclerDashboardPage() {
         <section>
           <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
             <span className="bg-blue-400 w-2 h-6 rounded-full inline-block"></span>
-            Incoming Lots
+            {t.incoming_lots}
           </h2>
           {incomingLots.length === 0 ? (
             <div className="text-center py-12 text-gray-500 bg-white rounded-lg border border-dashed border-gray-300">
@@ -44,7 +48,7 @@ export default async function RecyclerDashboardPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {incomingLots.map(lot => (
-                <IncomingLotCard key={lot.id} lot={lot} />
+                <IncomingLotCard key={lot.id} lot={lot} confirmLabel={t.confirm_payment} />
               ))}
             </div>
           )}
@@ -53,7 +57,7 @@ export default async function RecyclerDashboardPage() {
         <section>
           <h2 className="text-xl font-bold text-gray-800 mb-4 mt-8 flex items-center gap-2">
             <span className="bg-green-500 w-2 h-6 rounded-full inline-block"></span>
-            Completed
+            {t.completed}
           </h2>
           {completedLots.length === 0 ? (
             <div className="text-center py-12 text-gray-500 bg-white rounded-lg border border-dashed border-gray-300">

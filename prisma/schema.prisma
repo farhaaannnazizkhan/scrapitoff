@@ -133,8 +133,8 @@ model Lot {
   status              LotStatus          @default(CREATED)
 
   pickup_request      PickupRequest      @relation(fields: [pickup_request_id], references: [id])
-  collector           User               @relation("CollectorLots", fields: [collector_id], references: [id])
-  recycler            User?              @relation("RecyclerLots", fields: [recycler_id], references: [id])
+  collector   User   @relation("CollectorLots", fields: [collector_id], references: [id])
+  recycler    User?  @relation("RecyclerLots", fields: [recycler_id], references: [id])
   blockchain_records  BlockchainRecord[]
   ratings             Rating[]
   earnings            EarningsLedger[]

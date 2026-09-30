@@ -2,24 +2,22 @@ import React from 'react';
 import Link from 'next/link';
 import { getAllMaterials } from '@/lib/db/materials';
 import { RateCard } from '@/components/citizen/RateCard';
+import { getLanguage } from '@/lib/i18n/getLanguage';
+import { translations } from '@/lib/i18n/translations';
 
 export const dynamic = 'force-dynamic';
 
 export default async function CitizenPage() {
   const materials = await getAllMaterials();
+  const lang = await getLanguage();
+  const t = translations[lang];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-6">
         <div>
-          <h1 className="text-3xl font-extrabold text-green-600 tracking-tight">ScrapItOff</h1>
-          <p className="text-gray-500 mt-1 font-medium">Live scrap rates in your area</p>
-        </div>
-        
-        <div className="flex bg-white rounded-md shadow-sm border border-gray-200 p-1 w-fit">
-          <button className="px-3 py-1 text-sm font-medium bg-green-50 text-green-700 rounded transition-colors" aria-label="English">EN</button>
-          <button className="px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded transition-colors" aria-label="Hindi">हिं</button>
-          <button className="px-3 py-1 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded transition-colors" aria-label="Marathi">मर</button>
+          <h1 className="text-3xl font-extrabold text-green-600 tracking-tight">{t.app_name}</h1>
+          <p className="text-gray-500 mt-1 font-medium">{t.tagline}</p>
         </div>
       </header>
 
@@ -41,7 +39,7 @@ export default async function CitizenPage() {
           href="/citizen/book"
           className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-10 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 w-full sm:w-auto text-lg"
         >
-          Book a Pickup
+          {t.book_pickup}
         </Link>
         <p className="text-xs text-gray-400 mt-4">
           Rates updated daily. Actual weight measured at pickup.

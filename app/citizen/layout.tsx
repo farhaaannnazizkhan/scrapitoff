@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppHeader } from '@/components/shared/AppHeader';
 import { getDemoRole } from '@/lib/auth/demoRole';
+import { getLanguage } from '@/lib/i18n/getLanguage';
 
 export default async function CitizenLayout({
   children,
@@ -8,11 +9,12 @@ export default async function CitizenLayout({
   children: React.ReactNode;
 }) {
   const currentRole = await getDemoRole();
+  const currentLang = await getLanguage();
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
       <div className="max-w-md mx-auto md:max-w-4xl p-4 sm:p-6 lg:p-8">
-        <AppHeader currentRole={currentRole} />
+        <AppHeader currentRole={currentRole} currentLang={currentLang} />
         {children}
       </div>
     </div>
