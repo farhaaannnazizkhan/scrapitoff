@@ -7,8 +7,9 @@ import { WeightForm } from '@/components/collector/WeightForm';
 
 export const dynamic = 'force-dynamic';
 
-export default async function EnterWeightPage({ params }: { params: { requestId: string } }) {
-  const request = await getPickupRequestById(params.requestId);
+export default async function EnterWeightPage({ params }: { params: Promise<{ requestId: string }> }) {
+  const { requestId } = await params;
+  const request = await getPickupRequestById(requestId);
   const collector = await getFirstCollector();
   
   const material = request ? await getMaterialByCategory(request.material_category) : null;

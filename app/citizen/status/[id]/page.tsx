@@ -4,8 +4,9 @@ import { getPickupRequestById } from '@/lib/db/pickupRequests';
 
 export const dynamic = 'force-dynamic';
 
-export default async function PickupStatusPage({ params }: { params: { id: string } }) {
-  const request = await getPickupRequestById(params.id);
+export default async function PickupStatusPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const request = await getPickupRequestById(id);
 
   if (!request) {
     return (

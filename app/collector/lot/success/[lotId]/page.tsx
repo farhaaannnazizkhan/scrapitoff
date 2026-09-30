@@ -7,9 +7,10 @@ import { CopyButton } from '@/components/shared/CopyButton';
 
 export const dynamic = 'force-dynamic';
 
-export default async function LotSuccessPage({ params }: { params: { lotId: string } }) {
-  const lot = await getLotById(params.lotId);
-  const blockchainRecord = await getBlockchainRecordByLotId(params.lotId);
+export default async function LotSuccessPage({ params }: { params: Promise<{ lotId: string }> }) {
+  const { lotId } = await params;
+  const lot = await getLotById(lotId);
+  const blockchainRecord = await getBlockchainRecordByLotId(lotId);
 
   if (!lot || !blockchainRecord) {
     return (
