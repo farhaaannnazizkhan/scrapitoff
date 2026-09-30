@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createPickupRequest } from '../../lib/db/pickupRequests';
-import { prisma } from '../../lib/db/client';
+import { createPickupRequest } from '@/lib/db/pickupRequests';
+import { prisma } from '@/lib/db/client';
 
 export async function POST(req: Request) {
   try {

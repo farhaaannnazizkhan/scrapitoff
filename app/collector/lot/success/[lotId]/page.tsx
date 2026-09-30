@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import { getLotById } from '../../../../../lib/db/lots';
-import { getBlockchainRecordByLotId } from '../../../../../lib/db/blockchain';
-import { shortenHash } from '../../../../../lib/blockchain/hash';
-import { CopyButton } from '../../../../../components/shared/CopyButton';
+import { getLotById } from '@/lib/db/lots';
+import { getBlockchainRecordByLotId } from '@/lib/db/blockchain';
+import { shortenHash } from '@/lib/blockchain/hash';
+import { CopyButton } from '@/components/shared/CopyButton';
 
 export const dynamic = 'force-dynamic';
 

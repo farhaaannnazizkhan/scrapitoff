@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { getAllMaterials } from '../../lib/db/materials';
-import { RateCard } from '../../components/citizen/RateCard';
+import { getAllMaterials } from '@/lib/db/materials';
+import { RateCard } from '@/components/citizen/RateCard';
 
 export const dynamic = 'force-dynamic';
 

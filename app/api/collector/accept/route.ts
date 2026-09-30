@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { assignCollectorToPickup } from '../../../lib/db/pickupRequests';
+import { assignCollectorToPickup } from '@/lib/db/pickupRequests';
 
 export async function POST(req: Request) {
   try {

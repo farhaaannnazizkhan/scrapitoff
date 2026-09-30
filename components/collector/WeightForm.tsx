@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { calculateFairPrice } from '../../../lib/ai/pricing';
+import { calculateFairPrice } from '@/lib/ai/pricing';
 import { Material, PickupRequest } from '@prisma/client';
 
 export function WeightForm({ request, material, collectorId }: { request: PickupRequest, material: Material, collectorId: string }) {

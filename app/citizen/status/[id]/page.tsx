@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { getPickupRequestById } from '../../../../lib/db/pickupRequests';
+import { getPickupRequestById } from '@/lib/db/pickupRequests';
 
 export const dynamic = 'force-dynamic';
 

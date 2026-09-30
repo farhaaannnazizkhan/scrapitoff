@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { getAllMaterials } from '../../../lib/db/materials';
-import { PickupForm } from '../../../components/citizen/PickupForm';
+import { getAllMaterials } from '@/lib/db/materials';
+import { PickupForm } from '@/components/citizen/PickupForm';
 
 export const dynamic = 'force-dynamic';
 

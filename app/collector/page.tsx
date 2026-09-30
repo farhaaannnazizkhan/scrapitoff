@@ -1,8 +1,8 @@
 import React from 'react';
-import { getFirstCollector } from '../../lib/db/users';
-import { getPendingPickups, getPickupsByCollector } from '../../lib/db/pickupRequests';
-import { RequestCard } from '../../components/collector/RequestCard';
-import { OfflineIndicator } from '../../components/collector/OfflineIndicator';
+import { getFirstCollector } from '@/lib/db/users';
+import { getPendingPickups, getPickupsByCollector } from '@/lib/db/pickupRequests';
+import { RequestCard } from '@/components/collector/RequestCard';
+import { OfflineIndicator } from '@/components/collector/OfflineIndicator';
 
 export const dynamic = 'force-dynamic';
 

@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { calculateFairPrice } from '../../../../lib/ai/pricing';
-import { createLot } from '../../../../lib/db/lots';
-import { generateLotHash } from '../../../../lib/blockchain/hash';
-import { createBlockchainRecord } from '../../../../lib/db/blockchain';
-import { markPickupCompleted } from '../../../../lib/db/pickupRequests';
+import { calculateFairPrice } from '@/lib/ai/pricing';
+import { createLot } from '@/lib/db/lots';
+import { generateLotHash } from '@/lib/blockchain/hash';
+import { createBlockchainRecord } from '@/lib/db/blockchain';
+import { markPickupCompleted } from '@/lib/db/pickupRequests';
 
 export async function POST(req: Request) {
   try {

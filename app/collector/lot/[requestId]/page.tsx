@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import { getPickupRequestById } from '../../../../lib/db/pickupRequests';
-import { getMaterialByCategory } from '../../../../lib/db/materials';
-import { getFirstCollector } from '../../../../lib/db/users';
-import { WeightForm } from '../../../../components/collector/WeightForm';
+import { getPickupRequestById } from '@/lib/db/pickupRequests';
+import { getMaterialByCategory } from '@/lib/db/materials';
+import { getFirstCollector } from '@/lib/db/users';
+import { WeightForm } from '@/components/collector/WeightForm';
 
 export const dynamic = 'force-dynamic';
 
