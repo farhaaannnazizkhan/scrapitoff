@@ -29,3 +29,9 @@ export async function getUserById(id: string) {
     where: { id },
   });
 }
+
+export async function getUserByRole(role: "CITIZEN" | "COLLECTOR" | "RECYCLER") {
+  return await prisma.user.findFirst({
+    where: { role },
+  });
+}

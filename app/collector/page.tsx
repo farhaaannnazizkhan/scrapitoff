@@ -4,10 +4,14 @@ import { getPendingPickups, getPickupsByCollector } from '@/lib/db/pickupRequest
 import { RequestCard } from '@/components/collector/RequestCard';
 import { OfflineIndicator } from '@/components/collector/OfflineIndicator';
 
+import { getDemoRole } from '@/lib/auth/demoRole';
+import { AppHeader } from '@/components/shared/AppHeader';
+
 export const dynamic = 'force-dynamic';
 
 export default async function CollectorDashboardPage() {
   const collector = await getFirstCollector();
+  const currentRole = await getDemoRole();
   
   if (!collector) {
     return <div className="p-8 text-center text-red-500">No collector found in DB. Run the seed script.</div>;
@@ -21,6 +25,8 @@ export default async function CollectorDashboardPage() {
       <OfflineIndicator />
       
       <div className="max-w-md mx-auto md:max-w-4xl p-4 sm:p-6 lg:p-8 space-y-8 animate-in fade-in duration-500">
+        <AppHeader currentRole={currentRole} />
+        
         <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-6">
           <div>
             <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">Collector Dashboard</h1>

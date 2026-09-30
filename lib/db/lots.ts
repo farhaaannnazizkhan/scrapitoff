@@ -52,3 +52,13 @@ export async function transitionLotStatus(lotId: string, status: "CREATED" | "IN
     data: { status },
   });
 }
+
+export async function getLotsByRecycler(recyclerId: string) {
+  return await prisma.lot.findMany({
+    where: { recycler_id: recyclerId },
+    include: {
+      collector: true,
+      pickup_request: true,
+    }
+  });
+}

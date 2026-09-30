@@ -12,3 +12,10 @@ export async function createEarningsLedger(lotId: string, collectorId: string, a
     },
   });
 }
+
+export async function updateEarningsPaymentStatus(lotId: string, status: "PENDING" | "COMPLETED" | "FAILED") {
+  return await prisma.earningsLedger.updateMany({
+    where: { lot_id: lotId },
+    data: { payment_status: status },
+  });
+}
