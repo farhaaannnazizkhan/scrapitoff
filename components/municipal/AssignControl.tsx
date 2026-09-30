@@ -10,7 +10,7 @@ export function AssignControl({
 }: { 
   reportId: string; 
   currentAssignedTo: string | null; 
-  workers: { id: string, name: string }[] 
+  workers: { id: string, name: string, ward: string }[] 
 }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -45,7 +45,7 @@ export function AssignControl({
     >
       <option value="" className="text-gray-500">Unassigned</option>
       {workers.map(w => (
-        <option key={w.id} value={w.id}>{w.name}</option>
+        <option key={w.id} value={w.name}>{w.name} ({w.ward})</option>
       ))}
     </select>
   );

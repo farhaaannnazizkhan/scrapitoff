@@ -4,7 +4,7 @@ import { getLanguage } from '@/lib/i18n/getLanguage';
 import { translations } from '@/lib/i18n/translations';
 import { AppHeader } from '@/components/shared/AppHeader';
 import { getAllReports, getReportStats } from '@/lib/db/cleanlinessReports';
-import { getAllCollectors } from '@/lib/db/users';
+import { sanitationWorkers } from '@/lib/data/sanitationWorkers';
 import { ReportStatusControl } from '@/components/admin/ReportStatusControl';
 import { AssignControl } from '@/components/municipal/AssignControl';
 import { StatCard } from '@/components/shared/StatCard';
@@ -18,9 +18,8 @@ export default async function MunicipalDashboardPage() {
   
   const rawReports = await getAllReports();
   const reportStats = await getReportStats();
-  const workers = await getAllCollectors();
   
-  const workerList = workers.map(w => ({ id: w.id, name: w.name }));
+  const workerList = sanitationWorkers;
   const queueReports = rawReports.slice(0, 30);
   
   const recentResolutions = rawReports
@@ -34,7 +33,7 @@ export default async function MunicipalDashboardPage() {
         
         <header className="mb-8">
           <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">{t.municipal_dashboard || 'Municipal Sanitation Dashboard'}</h1>
-          <p className="text-gray-500 mt-1 font-medium">Ward-level cleanliness reports</p>
+          <p className="text-gray-500 mt-1 font-medium">Ward-level cleanliness reports assigned to Safai Karamcharis</p>
         </header>
 
         <section className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
@@ -75,6 +74,9 @@ export default async function MunicipalDashboardPage() {
                         <ReportStatusControl reportId={r.id} currentStatus={r.status} />
                       </td>
                       <td className="px-4 py-3">
+                        {r.assigned_to ? r.assigned_to : 'Unassigned'}
+                      </td>
+                      <td className="px-4 py-3">
                         <AssignControl reportId={r.id} currentAssignedTo={r.assigned_to} workers={workerList} />
                       </td>
                       <td className="px-4 py-3 text-xs text-gray-500">
@@ -97,7 +99,7 @@ export default async function MunicipalDashboardPage() {
             {recentResolutions.length > 0 ? (
               <div className="space-y-4">
                 {recentResolutions.map(r => {
-                  const assignedWorker = workers.find(w => w.id === r.assigned_to)?.name || 'Unknown Worker';
+                  const assignedWorker = r.assigned_to || 'Unknown Worker';
                   return (
                     <div key={r.id} className="p-4 bg-green-50 border border-green-100 rounded-lg">
                       <div className="flex justify-between items-start mb-1">
