@@ -24,6 +24,9 @@ export function AppHeader({ currentRole, currentLang }: { currentRole: DemoRole,
         <Link href="/verify" className="px-3 py-1 text-sm font-semibold text-purple-700 bg-purple-50 rounded-full hover:bg-purple-100 transition-colors border border-purple-200">
           {t.verify_lot || 'Verify Lot'}
         </Link>
+        <Link href="/citizen/report" className="px-3 py-1 text-sm font-semibold text-amber-700 bg-amber-50 rounded-full hover:bg-amber-100 transition-colors border border-amber-200">
+          Report
+        </Link>
         <Link href="/citizen/impact" className="px-3 py-1 text-sm font-semibold text-blue-700 bg-blue-50 rounded-full hover:bg-blue-100 transition-colors border border-blue-200">
           Impact
         </Link>

@@ -101,6 +101,7 @@ export function RoleSwitcher({ currentRole }: { currentRole: DemoRole }) {
         <button disabled={loading} onClick={() => switchRole('collector')} className={btnClass('collector')}>Collector</button>
         <button disabled={loading} onClick={() => switchRole('recycler')} className={btnClass('recycler')}>Recycler</button>
         <button disabled={loading} onClick={() => switchRole('admin')} className={btnClass('admin')}>Admin</button>
+        <button disabled={loading} onClick={() => switchRole('municipal')} className={btnClass('municipal')}>Municipal</button>
       </div>
 
       {dropdownRole && (

@@ -22,12 +22,18 @@ export default async function CitizenPage() {
       </header>
 
       <section>
-        <div className="mb-6">
+        <div className="mb-6 space-y-3">
           <Link 
             href="/citizen/scan"
             className="flex items-center justify-center w-full h-14 bg-green-100 hover:bg-green-200 text-green-800 font-bold rounded-lg transition-colors border border-green-300 shadow-sm"
           >
             🔍 What is this waste? Scan now
+          </Link>
+          <Link 
+            href="/citizen/report"
+            className="flex items-center justify-center w-full h-14 bg-white hover:bg-gray-50 text-green-700 font-bold rounded-lg transition-colors border-2 border-green-600 shadow-sm"
+          >
+            🏙️ Report a Cleanliness Issue
           </Link>
         </div>
 

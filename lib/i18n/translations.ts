@@ -17,7 +17,12 @@ export const translations = {
     confirm_payment: "Confirm Receipt & Pay",
     completed: "Completed",
     verify_lot: "Verify a Lot",
-    scan_waste: "Scan Waste"
+    scan_waste: "Scan Waste",
+    municipal_dashboard: "Municipal Sanitation Dashboard",
+    assigned_to: "Assigned To",
+    unassigned: "Unassigned",
+    resolved_this_month: "Resolved This Month",
+    reports_queue: "Reports Queue"
   },
   hi: {
     app_name: "स्क्रैपइटऑफ",
@@ -37,7 +42,12 @@ export const translations = {
     confirm_payment: "रसीद की पुष्टि करें और भुगतान करें",
     completed: "पूर्ण",
     verify_lot: "लॉट सत्यापित करें",
-    scan_waste: "कचरा स्कैन करें"
+    scan_waste: "कचरा स्कैन करें",
+    municipal_dashboard: "नगरपालिका स्वच्छता डैशबोर्ड",
+    assigned_to: "को सौंपा गया",
+    unassigned: "किसी को नहीं सौंपा गया",
+    resolved_this_month: "इस महीने हल किए गए",
+    reports_queue: "रिपोर्ट कतार"
   },
   mr: {
     app_name: "स्क्रॅपइटऑफ",
@@ -57,6 +67,11 @@ export const translations = {
     confirm_payment: "पावतीची पुष्टी करा आणि पैसे द्या",
     completed: "पूर्ण झाले",
     verify_lot: "लॉट सत्यापित करा",
-    scan_waste: "कचरा स्कॅन करा"
+    scan_waste: "कचरा स्कॅन करा",
+    municipal_dashboard: "नगरपालिका स्वच्छता डॅशबोर्ड",
+    assigned_to: "कडे सोपवले",
+    unassigned: "कोणालाही सोपवले नाही",
+    resolved_this_month: "या महिन्यात सोडवले",
+    reports_queue: "अहवाल रांग"
   }
 };

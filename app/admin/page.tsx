@@ -5,8 +5,10 @@ import { AppHeader } from '@/components/shared/AppHeader';
 import { getPlatformStats, getHotspotData } from '@/lib/db/adminStats';
 import { getPlatformMonthlyStats } from '@/lib/db/financials';
 import { getAnomalies } from '@/lib/db/anomalies';
+import { getAllReports, getReportStats } from '@/lib/db/cleanlinessReports';
 import { prisma } from '@/lib/db/client';
 import { HotspotMapWrapper } from '@/components/admin/HotspotMapWrapper';
+import { ReportStatusControl } from '@/components/admin/ReportStatusControl';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,6 +20,9 @@ export default async function AdminDashboardPage() {
   const monthlyStats = await getPlatformMonthlyStats();
   const hotspots = await getHotspotData();
   const anomalies = await getAnomalies();
+  const reportStats = await getReportStats();
+  const cleanlinessReports = (await getAllReports()).slice(0, 20);
+  
   const recentLots = await prisma.lot.findMany({
     orderBy: { created_at: 'desc' },
     take: 10,
@@ -105,6 +110,51 @@ export default async function AdminDashboardPage() {
                     </td>
                   </tr>
                 ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm mt-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Cleanliness Reports Queue</h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <StatCard title="Total Reports" value={reportStats.total} />
+            <StatCard title="Pending" value={reportStats.pending} />
+            <StatCard title="In Progress" value={reportStats.in_progress} />
+            <StatCard title="Resolved" value={reportStats.resolved} />
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead className="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="px-4 py-3">Category</th>
+                  <th className="px-4 py-3">Severity</th>
+                  <th className="px-4 py-3">Area</th>
+                  <th className="px-4 py-3">Status / Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cleanlinessReports.map(r => (
+                  <tr key={r.id} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="px-4 py-3 font-medium text-gray-900">{r.category}</td>
+                    <td className="px-4 py-3">
+                      <span className={`px-2 py-1 rounded text-xs font-bold border ${r.severity === 'HIGH' ? 'bg-red-50 text-red-700 border-red-200' : r.severity === 'MEDIUM' ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-gray-50 text-gray-700 border-gray-200'}`}>
+                        {r.severity}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">{r.area}</td>
+                    <td className="px-4 py-3">
+                      <ReportStatusControl reportId={r.id} currentStatus={r.status} />
+                    </td>
+                  </tr>
+                ))}
+                {cleanlinessReports.length === 0 && (
+                  <tr>
+                    <td colSpan={4} className="px-4 py-8 text-center text-gray-500 italic">No reports found.</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

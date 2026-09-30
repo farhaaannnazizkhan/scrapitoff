@@ -36,6 +36,12 @@ enum PaymentStatus {
   FAILED
 }
 
+enum CleanlinessStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+}
+
 model User {
   id             String           @id @default(uuid())
   role           UserRole         @default(CITIZEN)
@@ -54,6 +60,7 @@ model User {
   reviews_given    Rating[]        @relation("Reviewer")
   reviews_received Rating[]        @relation("Reviewee")
   earnings         EarningsLedger[]
+  cleanliness_reports CleanlinessReport[] @relation("CitizenReports")
 
   created_at     DateTime         @default(now())
   updated_at     DateTime         @updatedAt
@@ -199,4 +206,23 @@ model EarningsLedger {
   deleted_at     DateTime?
 
   @@map("earnings_ledger")
+}
+
+model CleanlinessReport {
+  id           String            @id @default(uuid())
+  citizen_id   String
+  citizen      User              @relation("CitizenReports", fields: [citizen_id], references: [id])
+  category     String
+  severity     String
+  description  String
+  area         String
+  address      String?
+  photo_url    String?
+  status       CleanlinessStatus @default(PENDING)
+  assigned_to  String?
+  created_at   DateTime          @default(now())
+  updated_at   DateTime          @updatedAt
+  deleted_at   DateTime?
+
+  @@map("cleanliness_reports")
 }

@@ -1,12 +1,12 @@
 import { cookies } from 'next/headers';
 
 export const DEMO_ROLE_COOKIE = "scrapitoff_demo_role";
-export type DemoRole = "citizen" | "collector" | "recycler" | "admin";
+export type DemoRole = "citizen" | "collector" | "recycler" | "admin" | "municipal";
 
 export async function getDemoRole(): Promise<DemoRole> {
   const cookieStore = await cookies();
   const role = cookieStore.get(DEMO_ROLE_COOKIE)?.value;
-  if (role === "collector" || role === "recycler" || role === "admin") {
+  if (role === "collector" || role === "recycler" || role === "admin" || role === "municipal") {
     return role as DemoRole;
   }
   return "citizen";
