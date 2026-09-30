@@ -2,8 +2,18 @@ import React from 'react';
 import { Material } from '@prisma/client';
 
 interface RateCardProps {
-  material: Material;
+  material: {
+    id: string;
+    category: string;
+    sub_category?: string | null;
+    description?: string | null;
+    image_url?: string | null;
+    unit: string;
+    base_rate_per_kg: number;
+  };
+  trend?: "rising" | "falling" | "stable";
 }
+
 
 const EMOJI_MAP: Record<string, string> = {
   'Newspaper': '📰',
@@ -18,9 +28,9 @@ const EMOJI_MAP: Record<string, string> = {
   'Cardboard': '📦',
 };
 
-export function RateCard({ material }: RateCardProps) {
+export function RateCard({ material, trend = "stable" }: RateCardProps) {
   const emoji = EMOJI_MAP[material.category] || '♻️';
-  const trend = "stable";
+  const trend = "rising" | "falling" | "stable";
 
   return (
     <div className="flex items-center bg-white rounded-lg shadow-sm border-l-4 border-green-600 p-4 relative overflow-hidden group hover:shadow-md transition-shadow">
@@ -33,7 +43,7 @@ export function RateCard({ material }: RateCardProps) {
       </div>
       <div className="text-right">
         <div className="font-bold text-green-700 text-xl">
-          ₹{material.base_rate_per_kg} <span className="text-sm font-normal text-gray-500">/ {material.unit}</span>
+          ₹{(material.base_rate_per_kg ?? 0) * 1.0} <span className="text-sm font-normal text-gray-500">/ {material.unit}</span>
         </div>
         <div className="text-sm mt-1 flex items-center justify-end">
           {trend === 'stable' && <span className="text-gray-400 mr-1">→</span>}
