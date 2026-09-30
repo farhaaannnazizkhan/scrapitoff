@@ -17,3 +17,15 @@ export async function getFirstCitizen() {
     where: { role: 'CITIZEN' },
   });
 }
+
+export async function getAllRecyclers() {
+  return await prisma.user.findMany({
+    where: { role: 'RECYCLER' },
+  });
+}
+
+export async function getUserById(id: string) {
+  return await prisma.user.findUnique({
+    where: { id },
+  });
+}

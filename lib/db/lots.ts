@@ -28,3 +28,27 @@ export async function updateLotStatus(id: string, status: "CREATED" | "IN_TRANSI
     data: { status },
   });
 }
+
+export async function getLotWithDetails(id: string) {
+  return await prisma.lot.findUnique({
+    where: { id },
+    include: {
+      collector: true,
+      recycler: true,
+    }
+  });
+}
+
+export async function updateLotWithRecycler(lotId: string, recyclerId: string) {
+  return await prisma.lot.update({
+    where: { id: lotId },
+    data: { recycler_id: recyclerId },
+  });
+}
+
+export async function transitionLotStatus(lotId: string, status: "CREATED" | "IN_TRANSIT" | "DELIVERED" | "VERIFIED") {
+  return await prisma.lot.update({
+    where: { id: lotId },
+    data: { status },
+  });
+}

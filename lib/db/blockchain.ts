@@ -14,3 +14,14 @@ export async function getBlockchainRecordByLotId(lotId: string) {
     where: { lot_id: lotId },
   });
 }
+
+export async function createHandoverRecord(lotId: string, hash: string) {
+  return await prisma.blockchainRecord.create({
+    data: {
+      lot_id: lotId,
+      hash,
+      transaction_type: 'HANDOVER_CONFIRMED',
+      timestamp: new Date(),
+    },
+  });
+}
